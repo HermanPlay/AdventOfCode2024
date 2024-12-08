@@ -273,15 +273,24 @@ func Part2Linear(input string) int {
 					count++
 					continue
 				} else if i == 2 {
-					// 0 2
 					if verify(numbersStr[i-1], numbersStr[i], false, false) {
-						// We can drop first element
-						count++
-						increasing, decreasing = calculateIncDec(numbersStr[i-1], numbersStr[i])
-						last = num
-						continue
-					} else if verify(numbersStr[i-1], numbersStr[i+1], increasing, decreasing) {
-						// log.Print("Removed i==2")
+						new_inc, new_dec := calculateIncDec(numbersStr[i-1], numbersStr[i])
+						if verify(numbersStr[i], numbersStr[i+1], new_inc, new_dec) {
+							// We can drop first element
+							count++
+							next, err := strconv.ParseInt(numbersStr[i+1], 10, 64)
+							if err != nil {
+								panic("parse next")
+							}
+							i++
+							last = next
+							increasing = new_inc
+							decreasing = new_dec
+							continue
+						}
+					}
+					if verify(numbersStr[i-1], numbersStr[i+1], increasing, decreasing) {
+						log.Print("Removed i==2")
 						count++
 						next, err := strconv.ParseInt(numbersStr[i+1], 10, 64)
 						if err != nil {
