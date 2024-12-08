@@ -116,9 +116,6 @@ func Part1(input string) int {
 			fmt.Printf("Report %s, is not safe\n", report)
 		}
 
-		// reader := bufio.NewReader(os.Stdin)
-		// fmt.Print("Enter text: ")
-		// reader.ReadString('\n')
 	}
 	return safe
 }
@@ -164,7 +161,7 @@ func isSafe(report []string, excludeIdx int) bool {
 
 }
 
-func Part2(input string) int {
+func Part2BruteForce(input string) int {
 	reports := strings.Split(input, "\n")
 	safe := 0
 	for _, report := range reports {
@@ -224,7 +221,6 @@ func Part2Linear(input string) int {
 
 			diff := num - last
 			diffAbs := int64(math.Abs(float64(diff)))
-			// log.Printf("%d %d diff=%d inc=%v dec=%v", last, num, diff, increasing, decreasing)
 
 			// Ensuire consistency and difference in range
 			if diffAbs < 1 || diffAbs > 3 || (increasing && diff <= 0) || (decreasing && diff >= 0) {
@@ -256,7 +252,6 @@ func Part2Linear(input string) int {
 					}
 					if verify(numbersStr[i-1], numbersStr[i+1], false, false) {
 						// We can drop i==1
-						log.Print("Removed i==1")
 						count++
 						next, err := strconv.ParseInt(numbersStr[i+1], 10, 64)
 						if err != nil {
@@ -281,7 +276,6 @@ func Part2Linear(input string) int {
 					// 0 2
 					if verify(numbersStr[i-1], numbersStr[i], false, false) {
 						// We can drop first element
-						log.Print("Removed i==0")
 						count++
 						increasing, decreasing = calculateIncDec(numbersStr[i-1], numbersStr[i])
 						last = num
@@ -298,7 +292,6 @@ func Part2Linear(input string) int {
 						continue
 					} else if verify(numbersStr[i-2], numbersStr[i], false, false) {
 						// We can remove i==1. Monotonicity may change
-						log.Print("Removed i==1")
 						count++
 						last = num
 						increasing, decreasing = calculateIncDec(numbersStr[i-2], numbersStr[i])
@@ -310,7 +303,6 @@ func Part2Linear(input string) int {
 				} else {
 					// i in [3, len-2]
 					if verify(numbersStr[i-1], numbersStr[i+1], increasing, decreasing) {
-						// log.Printf("Removed i==%d", i)
 						// We can drop current element
 						count++
 						next, err := strconv.ParseInt(numbersStr[i+1], 10, 64)

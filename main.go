@@ -65,8 +65,7 @@ func main() {
 
 	input := readInput(day, example)
 
-	// fmt.Printf("Part 1 result: %d\n", day2.Part1(input))
-	fmt.Printf("Part 2 result: %d\n", day2.Part2(input))
-	// fmt.Printf("Part 2 result: %d\n", day2.Part2("18 21 23 26 28 26 27 28"))
+	fmt.Printf("Part 1 result: %d\n", day2.Part1(input))
+	fmt.Printf("Part 2 result: %d\n", day2.Part2Linear(input))
 
 }
